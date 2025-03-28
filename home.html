@@ -23,18 +23,40 @@
 				font-weight: 400;
 				left: 50%;
 				line-height: 2.25em;
-				margin: -1.25em 0 0 -3em;
 				opacity: 0;
 				padding: 0 1.5em;
 				position: absolute;
 				text-align: center;
 				text-decoration: none;
 				top: 50%;
+				transform: translate(-50%, -50%);
 				white-space: nowrap;
 			}
-
 			.image.thumb:hover:after {
 				opacity: 1;
+			}
+
+			/* Add styles for consistent image heights */
+			#two .work-item {
+				margin-bottom: 2em;
+			}
+
+			#two .image.fit.thumb {
+				display: block;
+				position: relative;
+				height: 300px; /* Set fixed height */
+				overflow: hidden;
+			}
+
+			#two .image.fit.thumb img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover; /* This ensures images cover the area while maintaining aspect ratio */
+			}
+
+			/* Hide the second image in each work-item */
+			#two .work-item a.image.fit.thumb:not(:first-child) {
+				display: none;
 			}
 		</style>
 	</head>
@@ -76,7 +98,6 @@
 			<section id="two">
 				<h2>My Selection of Favorite Works</h2>
 				<div class="row">
-
 					<article class="col-6 col-12-xsmall work-item">
 						<a href="images/fulls/01.jpg" class="image fit thumb" data-lightbox="work-1" data-title="Label Design">
 							<img src="images/thumbs/01.jpg" alt="Label Design" />
@@ -103,14 +124,8 @@
 						</a>
 						<a href="images/fulls/04b.jpg" class="image fit thumb" data-lightbox="work-4" data-title="Packaging Art Direction - Alternative View"></a>
 					</article>
-				</div>
-				<a href="#" class="button" id="portfolio-btn">Discover More</a>
-			</section>
 
-			<!-- Hidden Section for Extra Projects -->
-			<section id="two">
-				
-				<div class="row">
+					<!-- Extra Projects -->
 					<article class="col-6 col-12-xsmall work-item extra-project" style="display:none;">
 						<a href="images/fulls/05.jpg" class="image fit thumb" data-lightbox="work-5" data-title="Product Catalog">
 							<img src="images/thumbs/05.jpg" alt="Product Catalog" />
@@ -152,6 +167,10 @@
 						</a>
 						<a href="images/fulls/10b.jpg" class="image fit thumb" data-lightbox="work-10" data-title="E-commerce Design - Alternative View"></a>
 					</article>
+				</div>
+				<div class="button-container" style="text-align: left; margin-bottom: 2em;">
+					<a href="#" class="button" id="portfolio-btn">Discover More</a>
+					<a href="#" class="button" id="show-less-btn" style="display:none;">Show Less</a>
 				</div>
 			</section>
 
@@ -233,7 +252,26 @@
 					// Reinitialize lightbox for all images (including extra projects)
 					initializeLightbox();
 
-					// Hide the "Discover More" button after clicking
+					// Hide the "Discover More" button and show "Show Less" button
+					$(this).hide();
+					$('#show-less-btn').show();
+				});
+
+				// Handle "Show Less" button click
+				$('#show-less-btn').click(function (e) {
+					e.preventDefault(); // Prevent default link behavior
+
+					// Hide extra projects
+					$('.extra-project').fadeOut();
+
+					// Destroy the existing poptrox instance
+					$('.image.fit.thumb').data('poptrox', null);
+
+					// Reinitialize lightbox for visible images only
+					initializeLightbox();
+
+					// Show the "Discover More" button and hide "Show Less" button
+					$('#portfolio-btn').show();
 					$(this).hide();
 				});
 

@@ -524,7 +524,7 @@ input, select, textarea {
 							padding-top: 4em;
 						}
 
-		}
+	
 
 		@media screen and (max-width: 980px) {
 
@@ -2037,6 +2037,7 @@ input, select, textarea {
 
 		.work-item .image {
 			margin: 0 0 1.5em 0;
+	
 		}
 
 		.work-item h3 {
